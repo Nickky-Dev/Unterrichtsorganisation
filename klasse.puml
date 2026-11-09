@@ -1,0 +1,67 @@
+@startuml Klassendiagramm_Unterrichtsorganisation
+title Klassendiagramm – Unterrichtsorganisation
+
+skinparam classAttributeIconSize 0
+skinparam monochrome false
+
+class Benutzer {
+  - id: Long
+  - benutzername: String
+  - email: String
+  - passwortHash: String
+  - vorname: String
+  - nachname: String
+  + anmelden()
+  + antragStellen()
+}
+
+class Rolle {
+  - id: Long
+  - bezeichnung: String
+  - beschreibung: String
+}
+
+class Abteilung {
+  - id: Long
+  - name: String
+  - kuerzel: String
+}
+
+class Antrag {
+  - id: Long
+  - anlass: String
+  - beschreibung: String
+  - status: String
+  - kFeld: Boolean
+  - erstelltAm: DateTime
+  - aktualisiertAm: DateTime
+  + einreichen()
+  + zurueckziehen()
+  + abzeichnen()
+  + genehmigen()
+  + ablehnen()
+}
+
+class LogEintrag {
+  - id: Long
+  - zeitpunkt: DateTime
+  - aktion: String
+  - benutzerId: Long
+  - details: String
+  - antragId: Long
+}
+
+class Entwurf {
+  - id: Long
+  - inhalt: Text
+  - gespeichertAm: DateTime
+}
+
+Benutzer "1" -- "0..*" Antrag : stellt >
+Benutzer "1" -- "1..*" Rolle : hat >
+Abteilung "1" -- "1..*" Benutzer : hat Abteilungsleiter >
+Antrag "1" -- "1" Abteilung : gehört zu >
+Antrag "1" -- "0..*" LogEintrag : erzeugt >
+Benutzer "1" -- "0..*" Entwurf : speichert >
+
+@enduml

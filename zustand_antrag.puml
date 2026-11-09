@@ -1,0 +1,47 @@
+@startuml Zustandsdiagramm_Antrag
+title Zustandsdiagramm: Lebenszyklus eines Antrags (Unterrichtsorganisation)
+
+skinparam state {
+  BackgroundColor LightYellow
+  BorderColor DarkOrange
+}
+
+[*] --> Entwurf : Lehrer speichert Entwurf
+Entwurf --> Eingereicht : Absenden / Einreichen
+
+Eingereicht --> BeimAL : zugewiesen an Abteilung
+BeimAL --> VomAL_Abgezeichnet : AL zeichnet ab\n(2-fach Bestätigung + Log)
+BeimAL --> Zurueckgezogen : Lehrer zieht zurück\n(nur solange noch nicht abgezeichnet)
+
+VomAL_Abgezeichnet --> BeimSSL : weiterleiten
+BeimSSL --> VomSSL_Abgezeichnet : SSL zeichnet ab\n(2-fach + Log)
+
+VomSSL_Abgezeichnet --> BeimSL : weiterleiten
+BeimSL --> Genehmigt : SL genehmigt\n(+ Log)
+BeimSL --> Abgelehnt : SL lehnt ab\n(AL wird informiert + bestätigt)
+
+Genehmigt --> BeimSekretariat : alle Fälle an Sekretariat
+BeimSekretariat --> Abgeschlossen : Sekretariat zeichnet ab
+
+Abgelehnt --> Archiviert
+Zurueckgezogen --> Archiviert
+
+state "Rückabwicklung" as Rueck {
+  Genehmigt --> Rueck_SL : SL zieht Genehmigung zurück
+  Rueck_SL --> Rueck_SSL : SSL zieht zurück
+  Rueck_SSL --> Rueck_AL : AL zieht zurück
+  Rueck_AL --> Archiviert : Antrag archiviert\n(mit vollständiger Historie)
+}
+
+Abgeschlossen --> [*]
+Archiviert --> [*]
+
+note right of BeimAL
+  K-Feld kann hier\nvom Abteilungsleiter gesetzt werden.\nBei K=true: Sekretariat\nextra informieren.
+end note
+
+note bottom of BeimSekretariat
+  Sekretariat wird in ALLEN Fällen\nam Ende informiert und zeichnet ab.
+end note
+
+@enduml
