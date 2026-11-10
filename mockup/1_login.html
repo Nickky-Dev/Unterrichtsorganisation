@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Login</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<script>
+			function deleteRow(btn) {
+				if (confirm("Eintrag wirklich löschen?")) btn.closest("tr").remove();
+			}
+			function filterTable(inputId, tableId) {
+				const query = document.getElementById(inputId).value.toLowerCase();
+				document.querySelectorAll(`#${tableId} tbody tr`).forEach((row) => {
+					row.style.display = row.innerText.toLowerCase().includes(query)
+						? ""
+						: "none";
+				});
+			}
+			function toggleModal(id, show) {
+				document.getElementById(id).style.display = show ? "flex" : "none";
+			}
+			function login() {
+				const user = document.getElementById("username").value.toLowerCase();
+				if (user.includes("admin")) location.href = "2_admin_home.html";
+				else if (user.includes("leiter") || user.includes("chef"))
+					location.href = "7_schulleiter_home.html";
+				else if (user.includes("sekre")) location.href = "9_sekretariat.html";
+				else location.href = "3_lehrer_home.html";
+			}
+		</script>
+	</head>
+	<body
+		class="bg-gray-100 flex items-center justify-center h-screen font-sans text-gray-800"
+	>
+		<div class="bg-white p-8 rounded-xl shadow-lg w-96 border border-gray-200">
+			<h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
+			<div class="space-y-4">
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1"
+						>Benutzername</label
+					>
+					<input
+						type="text"
+						id="username"
+						class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+						placeholder="z.B. admin, lehrer..."
+					/>
+				</div>
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1"
+						>Passwort</label
+					>
+					<input
+						type="password"
+						class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+						placeholder="••••••••"
+					/>
+				</div>
+				<button
+					onclick="login()"
+					class="w-full bg-blue-600 text-white font-semibold py-2 rounded shadow hover:bg-blue-700 transition mt-2"
+				>
+					Anmelden
+				</button>
+			</div>
+			<p class="mt-4 text-xs text-gray-500 text-center">
+				Tipp: Tippen Sie 'admin', 'leiter', 'sekre' oder irgendwas für Lehrer.
+			</p>
+		</div>
+	</body>
+</html>
