@@ -1,183 +1,292 @@
+
 <!doctype html>
 <html lang="de">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Herr Mustermann - Antragsportal</title>
-		<script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Herr Mustermann - Antragsportal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-		<script>
-			function deleteRow(btn) {
-				if (confirm("Eintrag wirklich löschen?")) btn.closest("tr").remove();
-			}
-			function filterTable(inputId, tableId) {
-				const query = document.getElementById(inputId).value.toLowerCase();
-				document.querySelectorAll(`#${tableId} tbody tr`).forEach((row) => {
-					row.style.display = row.innerText.toLowerCase().includes(query)
-						? ""
-						: "none";
-				});
-			}
-			function toggleModal(id, show) {
-				document.getElementById(id).style.display = show ? "flex" : "none";
-			}
-			function login() {
-				const user = document.getElementById("username").value.toLowerCase();
-				if (user.includes("admin")) location.href = "2_admin_home.html";
-				else if (user.includes("leiter") || user.includes("chef"))
-					location.href = "7_schulleiter_home.html";
-				else if (user.includes("sekre")) location.href = "9_sekretariat.html";
-				else location.href = "3_lehrer_home.html";
-			}
-		</script>
-	</head>
-	<body class="bg-gray-100 flex h-screen font-sans text-gray-800">
-		<!-- Sidebar -->
-		<div class="w-64 bg-white border-r flex flex-col h-full shadow-sm">
-			<div class="p-5 bg-gray-50 border-b">
-				<div class="font-bold text-lg text-gray-800">Herr Müller</div>
-				<div class="text-sm text-gray-500">Lehrer</div>
-			</div>
-			<div class="p-4">
-				<button
-					onclick="toggleModal('entwurfModal', true)"
-					class="w-full bg-blue-600 text-white font-medium py-2 rounded shadow hover:bg-blue-700 transition"
-				>
-					+ Neuer Antrag
-				</button>
-			</div>
-			<nav class="flex-1 overflow-y-auto">
-				<a
-					href="3_lehrer_home.html"
-					class="block p-4 border-b hover:bg-gray-50 text-gray-600 transition-colors"
-					>Posteingang</a
-				>
-				<a
-					href="5_entwuerfe.html"
-					class="block p-4 border-b bg-gray-100 border-l-4 border-blue-600 font-semibold text-blue-700 transition-colors"
-					>Entwürfe</a
-				>
-				<a
-					href="6_antraege.html"
-					class="block p-4 border-b hover:bg-gray-50 text-gray-600 transition-colors"
-					>Anträge</a
-				>
-			</nav>
-			<a
-				href="1_login.html"
-				class="p-4 border-t hover:bg-red-50 text-red-600 text-center font-medium transition"
-				>Abmelden</a
-			>
-		</div>
+    <script>
+        tailwind.config = {
+            darkMode: "class"
+        };
 
-		<div class="flex-1 p-8 overflow-y-auto flex flex-col">
-			<div
-				class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 max-w-3xl"
-			>
-				<div class="flex justify-between items-center mb-6 pb-4 border-b">
-					<h1 class="text-2xl font-bold text-gray-800">
-						Entwurf Bearbeiten: EMT
-					</h1>
-					<div class="flex space-x-2">
-						<a
-							href="5_entwuerfe.html"
-							class="px-3 py-1.5 border border-red-200 text-red-600 hover:bg-red-50 rounded transition"
-							>Löschen</a
-						>
-						<button
-							onclick="alert('Gespeichert!')"
-							class="px-3 py-1.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded transition"
-						>
-							Zwischenspeichern
-						</button>
-						<a
-							href="6_antraege.html"
-							class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white shadow rounded transition font-medium"
-							onclick="alert('Antrag erfolgreich abgesendet!')"
-							>Senden &rarr;</a
-						>
-					</div>
-				</div>
+        if (localStorage.getItem("darkMode") === "true") {
+            document.documentElement.classList.add("dark");
+        }
 
-				<div class="space-y-5">
-					<div>
-						<label class="block text-sm font-semibold text-gray-700 mb-1"
-							>Titel des Antrags</label
-						>
-						<input
-							type="text"
-							class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200 outline-none transition"
-							value="Titel"
-						/>
-					</div>
-					<div>
-						<label class="block text-sm font-semibold text-gray-700 mb-1"
-							>Beschreibung</label
-						>
-						<textarea
-							rows="5"
-							class="w-full border border-gray-300 rounded px-3 py-2 focus:ring focus:ring-blue-200 outline-none transition resize-y"
-						>
-Nachrichtentext</textarea
-						>
-					</div>
-					<div
-						class="flex items-center space-x-2 p-3 bg-gray-50 rounded border"
-					>
-						<input
-							type="checkbox"
-							id="feldk"
-							class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-						/>
-						<label for="feldk" class="font-medium text-gray-700 cursor-pointer"
-							>Feld K (neben Untis) setzen</label
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div
-			id="entwurfModal"
-			class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-		>
-			<div class="bg-white p-6 rounded-lg shadow-xl w-96">
-				<h2 class="text-xl font-bold mb-2">Neuer Entwurf</h2>
-				<p class="mb-4 text-gray-600 text-sm">
-					Für welche Abteilung ist das Formular?
-				</p>
-				<div class="space-y-3 mb-6">
-					<label class="flex items-center space-x-3 cursor-pointer"
-						><input
-							type="radio"
-							name="abt"
-							checked
-							class="w-4 h-4 text-blue-600"
-						/>
-						<span>EMT</span></label
-					>
-					<label class="flex items-center space-x-3 cursor-pointer"
-						><input type="radio" name="abt" class="w-4 h-4 text-blue-600" />
-						<span>Wirtschaft</span></label
-					>
-					<label class="flex items-center space-x-3 cursor-pointer"
-						><input type="radio" name="abt" class="w-4 h-4 text-blue-600" />
-						<span>Technik</span></label
-					>
-				</div>
-				<div class="flex justify-end space-x-3">
-					<button
-						onclick="toggleModal('entwurfModal', false)"
-						class="px-4 py-2 border rounded text-gray-600 hover:bg-gray-50 transition"
-					>
-						Abbrechen
-					</button>
-					<a
-						href="5_entwurf_bearbeiten.html"
-						class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 shadow transition"
-						>Erstellen &rarr;</a
-					>
-				</div>
-			</div>
-		</div>
-	</body>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle("dark");
+            localStorage.setItem("darkMode", String(isDark));
+            updateDarkModeIcon();
+        }
+
+        function updateDarkModeIcon() {
+            const isDark = document.documentElement.classList.contains("dark");
+            const icon = document.getElementById("darkModeIcon");
+            const button = document.getElementById("darkModeButton");
+
+            if (icon) {
+                icon.textContent = isDark ? "☀️" : "🌙";
+            }
+
+            if (button) {
+                button.title = isDark
+                    ? "Hellmodus aktivieren"
+                    : "Dark Mode aktivieren";
+
+                button.setAttribute("aria-pressed", String(isDark));
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", updateDarkModeIcon);
+
+        function deleteRow(btn) {
+            if (confirm("Eintrag wirklich löschen?")) {
+                btn.closest("tr").remove();
+            }
+        }
+
+        function filterTable(inputId, tableId) {
+            const query = document.getElementById(inputId).value.toLowerCase();
+
+            document.querySelectorAll(`#${tableId} tbody tr`).forEach((row) => {
+                row.style.display = row.innerText.toLowerCase().includes(query)
+                    ? ""
+                    : "none";
+            });
+        }
+
+        function toggleModal(id, show) {
+            document.getElementById(id).style.display = show ? "flex" : "none";
+        }
+
+        function login() {
+            const user = document.getElementById("username").value.toLowerCase();
+
+            if (user.includes("admin")) {
+                location.href = "2_admin_home.html";
+            } else if (user.includes("leiter") || user.includes("chef")) {
+                location.href = "7_schulleiter_home.html";
+            } else if (user.includes("sekre")) {
+                location.href = "9_sekretariat.html";
+            } else {
+                location.href = "3_lehrer_home.html";
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-950 flex h-screen font-sans text-gray-800 dark:text-gray-100 transition-colors duration-300">
+
+    <div class="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col h-full shadow-sm transition-colors duration-300">
+
+        <div class="p-5 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <div class="font-bold text-lg text-gray-800 dark:text-white">
+                Herr Müller
+            </div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Lehrer
+            </div>
+        </div>
+
+        <div class="p-4">
+            <button
+                onclick="toggleModal('entwurfModal', true)"
+                class="w-full bg-blue-600 text-white font-medium py-2 rounded shadow hover:bg-blue-700 transition">
+                + Neuer Antrag
+            </button>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto">
+
+            <a
+                href="3_lehrer_home.html"
+                class="block p-4 border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors">
+                Posteingang
+            </a>
+
+            <a
+                href="5_entwuerfe.html"
+                class="block p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-800 border-l-4 border-l-blue-600 font-semibold text-blue-700 dark:text-blue-400 transition-colors">
+                Entwürfe
+            </a>
+
+            <a
+                href="6_antraege.html"
+                class="block p-4 border-b border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition-colors">
+                Anträge
+            </a>
+
+        </nav>
+
+        <a
+            href="1_login.html"
+            class="p-4 border-t border-gray-200 dark:border-gray-800 hover:bg-red-50 dark:hover:bg-red-950/40 text-red-600 dark:text-red-400 text-center font-medium transition">
+            Abmelden
+        </a>
+    </div>
+
+    <div class="flex-1 p-8 overflow-y-auto flex flex-col">
+
+        <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 max-w-3xl transition-colors duration-300">
+
+            <div class="flex flex-wrap gap-4 justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
+                    Entwurf Bearbeiten: EMT
+                </h1>
+
+                <div class="flex flex-wrap gap-2">
+
+                    <a
+                        href="5_entwuerfe.html"
+                        class="px-3 py-1.5 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded transition">
+                        Löschen
+                    </a>
+
+                    <button
+                        onclick="alert('Gespeichert!')"
+                        class="px-3 py-1.5 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded transition">
+                        Zwischenspeichern
+                    </button>
+
+                    <a
+                        href="6_antraege.html"
+                        onclick="alert('Antrag erfolgreich abgesendet!')"
+                        class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white shadow rounded transition font-medium">
+                        Senden &rarr;
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="space-y-5">
+
+                <div>
+                    <label
+                        for="antragTitel"
+                        class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                        Titel des Antrags
+                    </label>
+
+                    <input
+                        type="text"
+                        id="antragTitel"
+                        class="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded px-3 py-2 focus:ring focus:ring-blue-200 dark:focus:ring-blue-900 outline-none transition"
+                        value="Titel"
+                    />
+                </div>
+
+                <div>
+                    <label
+                        for="beschreibung"
+                        class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                        Beschreibung
+                    </label>
+
+                    <textarea
+                        id="beschreibung"
+                        rows="5"
+                        class="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded px-3 py-2 focus:ring focus:ring-blue-200 dark:focus:ring-blue-900 outline-none transition resize-y">Nachrichtentext</textarea>
+                </div>
+
+                <div class="flex items-center space-x-2 p-3 bg-gray-50 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
+
+                    <input
+                        type="checkbox"
+                        id="feldk"
+                        class="w-4 h-4 accent-blue-600 rounded focus:ring-blue-500"
+                    />
+
+                    <label
+                        for="feldk"
+                        class="font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+                        Feld K (neben Untis) setzen
+                    </label>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="entwurfModal"
+        class="hidden fixed inset-0 bg-black/60 items-center justify-center z-50 p-4">
+
+        <div class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 p-6 rounded-lg shadow-xl w-96 max-w-full">
+
+            <h2 class="text-xl font-bold mb-2">
+                Neuer Entwurf
+            </h2>
+
+            <p class="mb-4 text-gray-600 dark:text-gray-400 text-sm">
+                Für welche Abteilung ist das Formular?
+            </p>
+
+            <div class="space-y-3 mb-6">
+
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="abt"
+                        checked
+                        class="w-4 h-4 accent-blue-600"
+                    />
+                    <span>EMT</span>
+                </label>
+
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="abt"
+                        class="w-4 h-4 accent-blue-600"
+                    />
+                    <span>Wirtschaft</span>
+                </label>
+
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="abt"
+                        class="w-4 h-4 accent-blue-600"
+                    />
+                    <span>Technik</span>
+                </label>
+
+            </div>
+
+            <div class="flex justify-end space-x-3">
+
+                <button
+                    onclick="toggleModal('entwurfModal', false)"
+                    class="px-4 py-2 border rounded border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                    Abbrechen
+                </button>
+
+                <a
+                    href="5_entwurf_bearbeiten.html"
+                    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 shadow transition">
+                    Erstellen &rarr;
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <button
+        id="darkModeButton"
+        type="button"
+        onclick="toggleDarkMode()"
+        class="fixed bottom-6 right-6 z-40 bg-white dark:bg-gray-800 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 shadow-lg rounded-full w-14 h-14 flex items-center justify-center hover:scale-110 hover:shadow-xl active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        title="Dark Mode aktivieren"
+        aria-label="Dark Mode umschalten"
+        aria-pressed="false">
+
+        <span id="darkModeIcon" class="text-2xl">🌙</span>
+    </button>
+
+</body>
 </html>
