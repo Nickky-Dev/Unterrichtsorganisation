@@ -79,23 +79,13 @@ In IT-Umgebungen können einzelne Ausfallpunkte (Single Points of Failure), unge
 **Alternativen:** Bei „nicht anwendbar“ ist eine Begründung erforderlich. Bei ungültiger Eingabe bleibt der bisherige Datenstand erhalten und eine verständliche Fehlermeldung erscheint.  
 **Nachbedingung:** Bewertung ist mit Zeitstempel und Benutzerbezug nachvollziehbar gespeichert.
 
-## 6. Technisches Zielbild
-
-```mermaid
-flowchart LR
-    U[Benutzer im Browser] --> F[HTML / CSS / JavaScript]
-    F --> B[Flask-Anwendung]
-    B --> A[Authentifizierung und Rollenprüfung]
-    B --> L[Prüf- und Risikologik]
-    B --> D[(SQLite-Datenbank)]
-```
 
 **Vorgesehener Stack:** Python 3, Flask, HTML/CSS/JavaScript, SQLite, pytest, Git/GitHub und Mermaid. SQLite ist für den schulischen Prototyp ausreichend; für einen produktiven Mehrbenutzerbetrieb wäre die Datenbankwahl erneut zu bewerten.
 
 
 **Datenintegrität:** Prüfergebnisse sollen nach Abschluss nicht stillschweigend überschrieben werden. Vorlagenänderungen dürfen alte Prüfdurchläufe nicht nachträglich verändern; hierfür sind unveränderliche Vorlagenversionen bzw. Snapshots vorzusehen.
 
-## 7. Qualität, Sicherheit und Datenschutz
+## 6. Qualität, Sicherheit und Datenschutz
 
 - Passwörter ausschließlich mit etabliertem Passwort-Hashing speichern; niemals im Klartext.
 - Sämtliche Eingaben serverseitig validieren; SQL-Abfragen parametrisieren bzw. ORM verwenden.
@@ -106,7 +96,7 @@ flowchart LR
 - Fehler nachvollziehbar protokollieren, ohne Passwörter oder vertrauliche Inhalte zu loggen.
 - Abhängigkeiten dokumentieren und vor Abgabe auf bekannte Sicherheitsprobleme prüfen.
 
-## 8. Projektorganisation und Rollen
+## 7. Projektorganisation und Rollen
 
 **Planungsannahme:** Vier Mitwirkende; die Aufgabenstellung nennt jedoch maximal drei Personen pro Gruppe. Die Gruppengröße muss daher **vorab von der Lehrkraft genehmigt** werden.
 
@@ -128,7 +118,7 @@ Die skeptische Rolle ist **keine passive Beobachterrolle**: Sie besitzt konkrete
 - Kanban-Status: **Backlog → In Progress → Review → Done**.
 - Entscheidungen und offene Risiken regelmäßig im Team abgleichen.
 
-## 9. Stakeholderanalyse
+## 8. Stakeholderanalyse
 
 | Stakeholder | Erwartung | Befürchtung | Gegenmaßnahme |
 |---|---|---|---|
@@ -138,7 +128,7 @@ Die skeptische Rolle ist **keine passive Beobachterrolle**: Sie besitzt konkrete
 | Testgruppe | Verständliche, testbare Anwendung | Unklare Abläufe und fehlende Testdaten | Testleitfaden, Beispieldatensatz, Fehlerformular |
 | Künftige Anwender | Schnelle Übersicht und nachvollziehbare Befunde | Falsches Sicherheitsgefühl | Klare Hinweise auf Grenzen und offene Prüfpunkte |
 
-## 10. Risiken und Gegenmaßnahmen
+## 9. Risiken und Gegenmaßnahmen
 
 | Risiko | Eintritt | Auswirkung | Maßnahme |
 |---|---|---|---|
@@ -149,7 +139,7 @@ Die skeptische Rolle ist **keine passive Beobachterrolle**: Sie besitzt konkrete
 | Sicherheitsfehler | Mittel | Hoch | Rollen-/Eingabetests, Code-Review |
 | Unzureichende Fremdtests | Mittel | Mittel | Testfenster und Testdaten verbindlich reservieren |
 
-## 11. Zeitplanung und Meilensteine
+## 10. Zeitplanung und Meilensteine
 
 Die Vorgaben nennen **LF11 Block 3–6 mit jeweils ca. 10 Stunden**, zusätzliche Abzüge in **Block 2 und Block 4**, sowie **LF12 mit 22 Stunden pro Woche**, abzüglich benannter Theorie- und Präsentationszeiten. Da sich die Block-2-Angabe nicht eindeutig den verbleibenden LF11-Blöcken zuordnen lässt und die Anzahl der LF12-Unterrichtswochen fehlt, ist **noch keine belastbare Gesamtsumme** möglich.
 
@@ -170,7 +160,7 @@ Die Vorgaben nennen **LF11 Block 3–6 mit jeweils ca. 10 Stunden**, zusätzlich
 | M4 – Qualitätssicherung | Automatisierte Tests, Fremdtest, Fehlerbehebung | Kritische Fehler behoben |
 | M5 – Abgabe | Repository, Dokumentation, Präsentation | Abnahmekriterien geprüft |
 
-## 12. Teststrategie und Abnahme
+## 11. Teststrategie und Abnahme
 
 | Test-ID | Szenario | Erwartetes Ergebnis |
 |---|---|---|
@@ -187,7 +177,7 @@ Die Vorgaben nennen **LF11 Block 3–6 mit jeweils ca. 10 Stunden**, zusätzlich
 
 **Definition of Done:** Ein Arbeitspaket gilt erst als abgeschlossen, wenn die Akzeptanzkriterien erfüllt, Änderungen im Repository dokumentiert, relevante Tests durchgeführt und der Pull Request geprüft wurde.
 
-## 13. Offene Entscheidungen
+## 12. Offene Entscheidungen
 
 - [ ] Genehmigung der Vierergruppe einholen.
 - [ ] Projektidee und Entwicklungsumgebung genehmigen lassen.
