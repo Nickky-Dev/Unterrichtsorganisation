@@ -174,18 +174,3 @@ Die Vorgaben nennen **LF11 Block 3–6 mit jeweils ca. 10 Stunden**, zusätzlich
 | T-08 | Prüfung abschließen und erneut öffnen | Ergebnisse und Zeitstempel bleiben nachvollziehbar |
 | T-09 | Bestehende Vorlage ändern | Abgeschlossene Altprüfung bleibt unverändert |
 | T-10 | Ungültige bzw. manipulierte Eingaben senden | Anwendung lehnt Eingabe sicher ab |
-
-**Definition of Done:** Ein Arbeitspaket gilt erst als abgeschlossen, wenn die Akzeptanzkriterien erfüllt, Änderungen im Repository dokumentiert, relevante Tests durchgeführt und der Pull Request geprüft wurde.
-
-## 12. Offene Entscheidungen
-
-- [ ] Genehmigung der Vierergruppe einholen.
-- [ ] Projektidee und Entwicklungsumgebung genehmigen lassen.
-- [ ] Konkrete Blocktermine und verfügbare Stunden bestätigen.
-- [ ] Rollen und Verantwortliche namentlich zuordnen.
-- [ ] Verbindliche MVP-Funktionen mit Lehrkraft abstimmen.
-- [ ] Fremdtestgruppe und Testtermin festlegen.
-
----
-
-*Dieses Dokument ist eine fachliche Planungsgrundlage und kein Nachweis einer bereits implementierten oder getesteten Anwendung. Änderungen werden über die Git-Historie nachvollziehbar dokumentiert.*
