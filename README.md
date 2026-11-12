@@ -92,56 +92,6 @@ flowchart LR
 
 **Vorgesehener Stack:** Python 3, Flask, HTML/CSS/JavaScript, SQLite, pytest, Git/GitHub und Mermaid. SQLite ist für den schulischen Prototyp ausreichend; für einen produktiven Mehrbenutzerbetrieb wäre die Datenbankwahl erneut zu bewerten.
 
-### Datenmodell (Entwurf)
-
-```mermaid
-erDiagram
-    USER ||--o{ AUDIT_RUN : performs
-    SYSTEM ||--o{ AUDIT_RUN : receives
-    CHECKLIST_TEMPLATE ||--o{ CHECK_ITEM : contains
-    CHECKLIST_TEMPLATE ||--o{ AUDIT_RUN : based_on
-    AUDIT_RUN ||--o{ AUDIT_RESULT : records
-    CHECK_ITEM ||--o{ AUDIT_RESULT : evaluated_in
-    USER {
-        int id PK
-        string username
-        string password_hash
-        string role
-    }
-    SYSTEM {
-        int id PK
-        string name
-        string type
-        string criticality
-    }
-    CHECKLIST_TEMPLATE {
-        int id PK
-        string title
-        int version
-    }
-    CHECK_ITEM {
-        int id PK
-        int template_id FK
-        string question
-        string weight
-    }
-    AUDIT_RUN {
-        int id PK
-        int system_id FK
-        int template_id FK
-        int user_id FK
-        datetime started_at
-        datetime completed_at
-    }
-    AUDIT_RESULT {
-        int id PK
-        int audit_run_id FK
-        int check_item_id FK
-        string status
-        string comment
-        datetime evaluated_at
-    }
-```
 
 **Datenintegrität:** Prüfergebnisse sollen nach Abschluss nicht stillschweigend überschrieben werden. Vorlagenänderungen dürfen alte Prüfdurchläufe nicht nachträglich verändern; hierfür sind unveränderliche Vorlagenversionen bzw. Snapshots vorzusehen.
 
