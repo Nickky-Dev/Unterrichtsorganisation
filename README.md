@@ -1,7 +1,7 @@
 # Projektkonzept & Qualitätssicherung
 
 > **Status:** Entwurf zur Freigabe · **Version:** 1.0 · **Projektart:** Schulprojekt / Webanwendung  
-> **Ziel:** Strukturierte Bewertung der Hochverfügbarkeitsvorsorge von IT-Systemen
+
 
 ## 1. Executive Summary
 
